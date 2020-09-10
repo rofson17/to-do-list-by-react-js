@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
 function App() {
+
+  const [inputlist, setInput] = useState();
+  const [items, setItem] = useState([]);
+
+  const inputEvent = (data) => {
+    setInput(data.target.value);
+
+  };
+
+  const submit = () => {
+    setItem((oldItems) => {
+      return [...oldItems, inputlist];
+    })
+    setInput('');
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="container">
+        <div className="card">
+          <h2>ToDo List</h2>
+          <input type="text" placeholder="Items" onChange={inputEvent} value={inputlist} />
+          <button onClick={submit}> + </button>
+          <ol>
+            {items.map((itemval) => {
+              return <li>{itemval}</li>
+            })}
+          </ol>
+        </div>
+      </div>
+    </>
   );
 }
 
